@@ -1,0 +1,226 @@
+{
+  "generated_at": "2026-10-30T00:56:10",
+  "mode": "deterministic",
+  "disclaimer": "Synthetic-data evaluation demonstrates engineering feasibility, not real-world causal accuracy.",
+  "dataset": {
+    "series": 120,
+    "days": 43800,
+    "ground_truth_windows": 16,
+    "scenarios": 6,
+    "load_seconds": 2.07
+  },
+  "detection": {
+    "anomalies_detected": 29,
+    "gt_windows_detected": 16,
+    "missed": 0,
+    "false_positive_anomalies": 13,
+    "precision": 0.552,
+    "recall": 1.0,
+    "f1": 0.711,
+    "false_positive_rate_days": 0.0008
+  },
+  "retrieval": {
+    "k": 3,
+    "mrr": 1.0,
+    "precision_at_k": 0.4,
+    "recall_at_k": 1.0,
+    "n": 15
+  },
+  "explanations": {
+    "top_hypothesis_accuracy_pct": 100.0,
+    "insufficient_evidence_handled_pct": 100.0,
+    "evidence_grounding_pct": 100.0,
+    "non_causal_language_pct": 100.0,
+    "temporal_consistency_pct": 100.0,
+    "geographic_consistency_pct": 100.0,
+    "confounders_not_top_ranked_pct": 100.0,
+    "false_positives_flagged_uncertain_pct": 100.0,
+    "per_scenario": {
+      "SCN-4": [
+        {
+          "anomaly_id": "ANM-1008",
+          "sku_id": "SKU-401",
+          "top_driver": "product_quality",
+          "strength": "STRONG",
+          "correct": true
+        }
+      ],
+      "SCN-1": [
+        {
+          "anomaly_id": "ANM-1010",
+          "sku_id": "SKU-102",
+          "top_driver": "competitor_activity",
+          "strength": "STRONG",
+          "correct": true
+        }
+      ],
+      "SCN-2": [
+        {
+          "anomaly_id": "ANM-1012",
+          "sku_id": "SKU-101",
+          "top_driver": "distribution_disruption",
+          "strength": "STRONG",
+          "correct": true
+        },
+        {
+          "anomaly_id": "ANM-1013",
+          "sku_id": "SKU-102",
+          "top_driver": "distribution_disruption",
+          "strength": "STRONG",
+          "correct": true
+        },
+        {
+          "anomaly_id": "ANM-1014",
+          "sku_id": "SKU-103",
+          "top_driver": "distribution_disruption",
+          "strength": "STRONG",
+          "correct": true
+        },
+        {
+          "anomaly_id": "ANM-1015",
+          "sku_id": "SKU-104",
+          "top_driver": "distribution_disruption",
+          "strength": "STRONG",
+          "correct": true
+        },
+        {
+          "anomaly_id": "ANM-1016",
+          "sku_id": "SKU-201",
+          "top_driver": "distribution_disruption",
+          "strength": "STRONG",
+          "correct": true
+        },
+        {
+          "anomaly_id": "ANM-1017",
+          "sku_id": "SKU-202",
+          "top_driver": "distribution_disruption",
+          "strength": "STRONG",
+          "correct": true
+        },
+        {
+          "anomaly_id": "ANM-1018",
+          "sku_id": "SKU-203",
+          "top_driver": "distribution_disruption",
+          "strength": "STRONG",
+          "correct": true
+        },
+        {
+          "anomaly_id": "ANM-1019",
+          "sku_id": "SKU-204",
+          "top_driver": "distribution_disruption",
+          "strength": "STRONG",
+          "correct": true
+        }
+      ],
+      "SCN-6": [
+        {
+          "anomaly_id": "ANM-1020",
+          "sku_id": "SKU-601",
+          "top_driver": "distribution_disruption",
+          "strength": "STRONG",
+          "correct": true
+        },
+        {
+          "anomaly_id": "ANM-1022",
+          "sku_id": "SKU-602",
+          "top_driver": "distribution_disruption",
+          "strength": "STRONG",
+          "correct": true
+        }
+      ],
+      "SCN-5": [
+        {
+          "anomaly_id": "ANM-1023",
+          "sku_id": "SKU-503",
+          "top_driver": "none",
+          "strength": "INSUFFICIENT",
+          "correct": true
+        }
+      ],
+      "SCN-3": [
+        {
+          "anomaly_id": "ANM-1027",
+          "sku_id": "SKU-304",
+          "top_driver": "cultural_event",
+          "strength": "STRONG",
+          "correct": true
+        },
+        {
+          "anomaly_id": "ANM-1028",
+          "sku_id": "SKU-203",
+          "top_driver": "cultural_event",
+          "strength": "STRONG",
+          "correct": true
+        },
+        {
+          "anomaly_id": "ANM-1029",
+          "sku_id": "SKU-303",
+          "top_driver": "cultural_event",
+          "strength": "STRONG",
+          "correct": true
+        }
+      ]
+    }
+  },
+  "latency_ms": {
+    "investigation_mean": 51.2069,
+    "investigation_p95": 57.7,
+    "per_stage_mean": {
+      "retrieve": 16.069,
+      "context": 2.0931,
+      "discover": 1.1172,
+      "rank": 0.0,
+      "statistics": 15.3172,
+      "evidence": 0.1207,
+      "reasoning": 0.0552,
+      "validate": 0.0207,
+      "report": 1.4759
+    }
+  },
+  "load": {
+    "seed": 42,
+    "imports": [
+      {
+        "dataset_type": "demand",
+        "status": "SUCCESS",
+        "rows_total": 43800,
+        "rows_imported": 43800,
+        "rows_rejected": 0,
+        "import_id": 1
+      },
+      {
+        "dataset_type": "inventory",
+        "status": "SUCCESS",
+        "rows_total": 43800,
+        "rows_imported": 43800,
+        "rows_rejected": 0,
+        "import_id": 2
+      },
+      {
+        "dataset_type": "promotions",
+        "status": "SUCCESS",
+        "rows_total": 258,
+        "rows_imported": 258,
+        "rows_rejected": 0,
+        "import_id": 3
+      },
+      {
+        "dataset_type": "operational_events",
+        "status": "SUCCESS",
+        "rows_total": 18,
+        "rows_imported": 18,
+        "rows_rejected": 0,
+        "import_id": 4
+      },
+      {
+        "dataset_type": "external_events",
+        "status": "SUCCESS",
+        "rows_total": 38,
+        "rows_imported": 38,
+        "rows_rejected": 0,
+        "import_id": 5
+      }
+    ],
+    "anomalies_detected": 29
+  }
+}

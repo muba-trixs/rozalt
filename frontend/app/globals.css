@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens — GitHub Dark × Bloomberg Terminal (PRD §20). Stored as RGB triplets for Tailwind alpha. */
+:root {
+  --background: 13 17 23;        /* #0D1117 */
+  --sidebar: 1 4 9;              /* #010409 */
+  --surface: 22 27 34;           /* #161B22 */
+  --surface-elevated: 33 38 45;  /* #21262D */
+  --border: 48 54 61;            /* #30363D */
+  --text-primary: 230 237 243;   /* #E6EDF3 */
+  --text-secondary: 139 148 158; /* #8B949E */
+  --text-muted: 110 118 129;     /* #6E7681 */
+  --accent-blue: 88 166 255;     /* #58A6FF */
+  --positive: 63 185 80;         /* #3FB950 */
+  --negative: 248 81 73;         /* #F85149 */
+  --warning: 210 153 34;         /* #D29922 */
+  --analytical-cyan: 57 197 207; /* #39C5CF */
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: rgb(var(--background));
+  color: rgb(var(--text-primary));
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+.num,
+.font-mono {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+::selection {
+  background: rgb(var(--accent-blue) / 0.35);
+}
+
+/* Thin, recessive scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--border)) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--border));
+  border-radius: 4px;
+}
+
+@layer components {
+  .panel {
+    @apply rounded border border-border bg-surface;
+  }
+  .panel-header {
+    @apply flex h-9 items-center justify-between gap-2 border-b border-border px-3 text-xs font-medium uppercase tracking-wider text-muted;
+  }
+  .label {
+    @apply text-2xs font-medium uppercase tracking-wider text-subtle;
+  }
+  .input {
+    @apply h-7 rounded border border-border bg-bg px-2 text-sm text-fg placeholder:text-subtle focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent/40;
+  }
+  .table-dense th {
+    @apply sticky top-0 z-10 h-8 border-b border-border bg-surface px-3 text-left text-2xs font-medium uppercase tracking-wider text-subtle;
+  }
+  .table-dense td {
+    @apply h-8 border-b border-border/60 px-3 text-sm;
+  }
+  .table-dense tbody tr {
+    @apply transition-colors hover:bg-elevated/60;
+  }
+  .kbd {
+    @apply inline-flex h-4 min-w-4 items-center justify-center rounded-sm border border-border bg-elevated px-1 font-mono text-2xs text-muted;
+  }
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.45; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.45; }
+}
+.skeleton {
+  animation: shimmer 1.4s ease-in-out infinite;
+  background: rgb(var(--surface-elevated));
+  border-radius: 3px;
+}

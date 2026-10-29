@@ -1,0 +1,55 @@
+# Event relevance scoring — HEURISTIC ENGINEERING ASSUMPTIONS.
+# These weights rank candidate events for analyst review. They are NOT calibrated
+# causal probabilities and must never be presented as such.
+weights:
+  temporal: 0.30
+  geographic: 0.25
+  product: 0.20
+  operational: 0.15
+  magnitude: 0.10
+
+components:
+  temporal: >-
+    Did the event start before/at anomaly onset? 1.0 when it starts 0-3 days before onset (or spans it),
+    decaying linearly to 0.2 at the lookback limit. Events starting after onset decay quickly to 0
+    (they cannot explain the onset) — except categories with `anticipation_days` (e.g. festivals),
+    where purchasing ahead of the event start is expected (0.9 inside the anticipation window).
+  geographic: >-
+    1.0 same region; 0.5 national / multi-region event; 0 for other regions.
+  product: >-
+    1.0 when the event names the SKU; 0.7 when it targets the SKU's category; 0.5 for region-wide
+    supply events that are not product specific; 0.3 for generic events; 0 when it names a different category.
+  operational: >-
+    Plausibility of a mechanism given the event category AND the anomaly direction. 1.0 when the
+    category's typical direction matches the anomaly, 0.5 ambiguous, 0.1 opposite direction.
+  magnitude: >-
+    Severity field (high 1.0 / medium 0.6 / low 0.25), promotion discount depth, and duration.
+
+window:
+  lookback_days: 21        # events may start up to this many days before onset
+  lookahead_days: 5        # temporal score of events starting after onset decays to 0 over this many days
+  onset_tolerance_days: 1  # detected onsets are uncertain by about a day
+  min_candidate_score: 0.35
+
+# Event category → driver type, typical demand mechanism and typical direction of recorded sales.
+categories:
+  competitor_promotion: {driver_type: competitor_activity, mechanism: demand_side, direction: NEGATIVE}
+  transport_strike: {driver_type: distribution_disruption, mechanism: supply_side, direction: NEGATIVE}
+  facility_disruption: {driver_type: distribution_disruption, mechanism: supply_side, direction: NEGATIVE}
+  supplier_delay: {driver_type: distribution_disruption, mechanism: supply_side, direction: NEGATIVE}
+  quality_hold: {driver_type: product_quality, mechanism: demand_and_supply, direction: NEGATIVE}
+  product_quality: {driver_type: product_quality, mechanism: demand_side, direction: NEGATIVE}
+  cultural_event: {driver_type: cultural_event, mechanism: demand_side, direction: POSITIVE, anticipation_days: 5}
+  social_trend: {driver_type: social_trend, mechanism: demand_side, direction: POSITIVE, anticipation_days: 2}
+  weather: {driver_type: weather, mechanism: demand_and_supply, direction: EITHER}
+  regulatory: {driver_type: regulatory, mechanism: demand_and_supply, direction: EITHER}
+  macroeconomic: {driver_type: macroeconomic, mechanism: demand_side, direction: EITHER}
+  internal_promotion: {driver_type: internal_promotion, mechanism: demand_side, direction: POSITIVE}
+  maintenance: {driver_type: operational_routine, mechanism: supply_side, direction: NEGATIVE, routine: true}
+  other: {driver_type: other, mechanism: unknown, direction: EITHER}
+
+# Thresholds used by the deterministic hypothesis engine (also heuristics).
+hypothesis:
+  strong: 0.80
+  moderate: 0.62
+  weak: 0.48
